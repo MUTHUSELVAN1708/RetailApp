@@ -41,7 +41,6 @@ ios/Pods
 
 # Ignore environment files
 .env
-.env.*
 
 # Symbolication related
 app.*.symbols
