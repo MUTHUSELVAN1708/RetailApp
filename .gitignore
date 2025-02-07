@@ -33,6 +33,16 @@ migrate_working_dir/
 .pub/
 /build/
 
+# Flutter-specific files to ignore
+build/
+pubspec.lock
+android/app/debug.keystore
+ios/Pods
+
+# Ignore environment files
+.env
+.env.*
+
 # Symbolication related
 app.*.symbols
 
