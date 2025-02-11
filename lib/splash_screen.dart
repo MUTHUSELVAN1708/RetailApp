@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:retail_mobile/presentation/screens/bottom_nav/bottom_main_screen.dart';
 import 'package:retail_mobile/presentation/screens/dashboard/dashboard_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -25,7 +26,7 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
       // final token = await _getToken();
 
       // if (token != null && token.isNotEmpty) {
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 0));
       _navigateToMainScreen();
       // } else {
       //   _navigateToInitialScreen();
@@ -38,7 +39,7 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const DashboardScreen(),
+        builder: (context) => const BottomMainScreen(),
       ),
     );
   }

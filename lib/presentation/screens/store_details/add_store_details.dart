@@ -1,15 +1,20 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:retail_mobile/config/app_colors.dart';
 import 'dart:io';
 
-class CompanyDetailsForm extends StatefulWidget {
-  const CompanyDetailsForm({super.key});
+import 'package:retail_mobile/presentation/widgets/common_image_widget.dart';
+
+class AddStoreDetails extends StatefulWidget {
+  const AddStoreDetails({super.key});
 
   @override
-  State<CompanyDetailsForm> createState() => _CompanyDetailsFormState();
+  State<AddStoreDetails> createState() => _AddStoreDetailsState();
 }
 
-class _CompanyDetailsFormState extends State<CompanyDetailsForm> {
+class _AddStoreDetailsState extends State<AddStoreDetails> {
   File? _image;
   final _formKey = GlobalKey<FormState>();
 
@@ -27,99 +32,115 @@ class _CompanyDetailsFormState extends State<CompanyDetailsForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Header
-                const Text(
-                  'Add Company Details',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 20),
-
-                // Image Picker Section
-                Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade300),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Column(
-                    children: [
-                      _image != null
-                          ? Image.file(
-                              _image!,
-                              height: 100,
-                              width: 100,
-                              fit: BoxFit.cover,
-                            )
-                          : Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const Icon(
-                                Icons.business,
-                                size: 50,
-                                color: Colors.grey,
-                              ),
-                            ),
-                      const SizedBox(height: 10),
-                      TextButton(
-                        onPressed: _pickImage,
-                        child: const Text('Browse Files'),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                _buildTextField(
-                    'First Name', 'Enter Your First Name', (value) {}),
-                _buildTextField('GSTIN', 'Enter Your GSTIN', (value) {}),
-                _buildTextField(
-                    'Phone Number', 'Enter Your Phone Number', (value) {}),
-                _buildTextField('E-Mail', 'Enter Your Email', (value) {}),
-                _buildTextField('Address', 'Enter Your Address', (value) {}),
-                _buildTextField('City', 'Enter Your City', (value) {}),
-                _buildTextField('POS', 'Enter Your POS', (value) {}),
-                _buildTextField(
-                    'Device ID', 'Enter Your Device ID', (value) {}),
-                _buildTextField('Store Group Name',
-                    'Enter Your Store Group Name', (value) {}),
-                _buildTextField('Store Name', 'Enter Store Name', (value) {}),
-                _buildTextField('Device Name', 'Enter Device Name', (value) {}),
-
-                const SizedBox(height: 20),
-
-                // Continue Button
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {}
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text(
+                    'Add Company Details',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryButtonColor,
                     ),
                   ),
-                  child: const Text(
-                    'Continue',
-                    style: TextStyle(color: Colors.white),
+                  const SizedBox(height: 20),
+                  DottedBorder(
+                    color: AppColors.primaryButtonColor,
+                    strokeWidth: 1.5,
+                    borderType: BorderType.RRect,
+                    radius: const Radius.circular(10),
+                    dashPattern: const [8, 4],
+                    child: GestureDetector(
+                      onTap: () {
+                        _pickImage();
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Column(
+                          children: [
+                            _image != null
+                                ? Image.file(
+                                    _image!,
+                                    height: 50,
+                                    width: 50,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child:
+                                        CommonImageWidget(imageName: 'upload')),
+                            const SizedBox(height: 10),
+                            Text(
+                              'Store Logo',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            const SizedBox(height: 10),
+                            Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 30, vertical: 5),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: AppColors.primaryButtonColor),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: const Text('Browse Files')),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  _buildTextField(
+                      'Firm Name', 'Enter Your Firm Name', (value) {}),
+                  _buildTextField('GSTIN', 'Enter Your GSTIN', (value) {}),
+                  _buildTextField(
+                      'Phone Number', 'Enter Your Phone Number', (value) {}),
+                  _buildTextField('E-Mail', 'Enter Your Email', (value) {}),
+                  _buildTextField('Address', 'Enter Your Address', (value) {}),
+                  _buildTextField('City', 'Enter Your City', (value) {}),
+                  _buildTextField('POS', 'Enter Your POS', (value) {}),
+                  _buildTextField(
+                      'Device ID', 'Enter Your Device ID', (value) {}),
+                  _buildTextField('Store Group Name',
+                      'Enter Your Store Group Name', (value) {}),
+                  _buildTextField('Store Name', 'Enter Store Name', (value) {}),
+                  _buildTextField(
+                      'Device Name', 'Enter Device Name', (value) {}),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {}
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primaryButtonColor,
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text(
+                      'Continue',
+                      style:
+                          TextStyle(color: AppColors.whiteColor, fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -131,25 +152,38 @@ class _CompanyDetailsFormState extends State<CompanyDetailsForm> {
       String label, String hint, Function(String)? onChanged) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
-      child: TextFormField(
-        decoration: InputDecoration(
-          labelText: label,
-          hintText: hint,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(fontSize: 15),
           ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 12,
+          const SizedBox(
+            height: 4,
           ),
-        ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Please enter $label';
-          }
-          return null;
-        },
-        onChanged: onChanged,
+          TextFormField(
+            decoration: InputDecoration(
+              labelText: label,
+              hintText: hint,
+              floatingLabelBehavior: FloatingLabelBehavior.never,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 8,
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter $label';
+              }
+              return null;
+            },
+            onChanged: onChanged,
+          ),
+        ],
       ),
     );
   }

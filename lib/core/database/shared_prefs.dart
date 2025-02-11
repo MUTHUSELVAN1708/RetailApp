@@ -42,7 +42,6 @@ class SharedPrefs {
       await prefs.setBool(_keyRememberMe, true);
       await prefs.setBool(_keyIsLoggedIn, true);
     } else {
-      // If Remember Me is unchecked, clear stored credentials
       await clearCredentials();
     }
   }
