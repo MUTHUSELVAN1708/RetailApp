@@ -1,227 +1,138 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:retail_mobile/config/app_colors.dart';
+import 'package:retail_mobile/presentation/screens/billing/billing_screen.dart';
+import 'package:retail_mobile/presentation/screens/cart/bill_screen.dart';
+import 'package:retail_mobile/presentation/screens/cart/cart_screen.dart';
+import 'package:retail_mobile/presentation/screens/cart/view_bill_screen.dart';
 import 'package:retail_mobile/presentation/screens/dashboard/sidebar_navigation.dart';
+import 'package:retail_mobile/presentation/screens/shift/shift_main_screen.dart';
 import 'package:retail_mobile/presentation/widgets/custom_svg.dart';
+import 'package:retail_mobile/state_management/state/floating_state.dart';
 
-class BottomMainScreen extends StatefulWidget {
+class BottomMainScreen extends ConsumerStatefulWidget {
   const BottomMainScreen({super.key});
 
   @override
-  State<BottomMainScreen> createState() => _HomeScreenState();
+  ConsumerState<BottomMainScreen> createState() => _BottomMainScreenState();
 }
 
-class _HomeScreenState extends State<BottomMainScreen> {
-  int _selectedIndex = 0;
+class _BottomMainScreenState extends ConsumerState<BottomMainScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final List<Widget> _pages = [
-    const ProductsPage(),
-    const CartPage(),
-    const BillingPage(),
-    const OrdersPage(),
-    const ProfilePage(),
+    const ViewBillScreen(),
+    const CartScreen(),
+    const BillingScreen(),
+    const ShiftMainScreen(),
+    const ShiftMainScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: SidebarNavigation(),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _pages,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.payment),
-            label: 'Billing',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.access_time),
-            label: 'Orders',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ProductsPage extends StatelessWidget {
-  const ProductsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    final index = ref.watch(boolProvider).bottomIndex;
+    return GestureDetector(
+      onTap: () {
+        if (ref.watch(boolProvider).isExpanded) {
+          ref.read(boolProvider.notifier).toggleExpanded();
+        }
+      },
+      child: Scaffold(
+        key: _scaffoldKey,
+        resizeToAvoidBottomInset: true,
+        drawer: SidebarNavigation(),
+        extendBodyBehindAppBar: false,
         backgroundColor: Colors.white,
-        elevation: 0,
-        title: Image.asset(
-          'assets/images/elude_logo.png',
-          height: 30,
-        ),
-        leading: Row(
-          children: [],
-        ),
-      ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 100,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.all(10),
-              children: [
-                _buildCategoryItem('star', 'Fav'),
-                _buildCategoryItem('all_cart', 'All'),
-                _buildCategoryItem('chocolate', 'Chocolate'),
-                _buildCategoryItem('fruits', 'Fruits'),
-                _buildCategoryItem('veg', 'Vegetables'),
-              ],
-            ),
+        appBar: AppBar(
+          leadingWidth: 150,
+          leading: Row(
+            children: [
+              IconButton(
+                padding: EdgeInsets.zero,
+                icon: CustomSvg(
+                  name: 'menu_icon',
+                  width: 25,
+                  height: 25,
+                ),
+                onPressed: () {
+                  _scaffoldKey.currentState?.openDrawer();
+                },
+              ),
+              IconButton(
+                padding: EdgeInsets.zero,
+                icon: CustomSvg(
+                  name: 'notification',
+                  width: 25,
+                  height: 20,
+                ),
+                onPressed: () {},
+              ),
+            ],
           ),
-
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search Product / Item No.',
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: Container(
-                  padding: const EdgeInsets.all(8),
-                  child: const Text(
-                    'Scan Code',
-                    style: TextStyle(color: Colors.red),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          actions: [
+            Image.asset(
+              'assets/images/elude_logo.png',
+              height: 30,
+            ),
+          ],
+        ),
+        body: IndexedStack(
+          index: index,
+          children: _pages,
+        ),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: AppColors.primaryButtonColor,
+          ),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+              child: GNav(
+                gap: 7,
+                activeColor: AppColors.whiteColor,
+                iconSize: 24,
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                duration: Duration(milliseconds: 400),
+                tabMargin: EdgeInsets.symmetric(vertical: 7),
+                tabBackgroundColor: Color(0xFFC52341),
+                color: AppColors.whiteColor,
+                tabs: [
+                  GButton(
+                    icon: Icons.home_rounded,
+                    text: 'HOME',
                   ),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
+                  GButton(
+                    icon: Icons.shopping_cart_sharp,
+                    text: 'CART',
+                  ),
+                  GButton(
+                    icon: Icons.currency_rupee_outlined,
+                    text: 'BILLING',
+                  ),
+                  GButton(
+                    icon: Icons.access_time_filled_rounded,
+                    text: 'SHIFT',
+                  ),
+                  GButton(
+                    icon: Icons.receipt_long_rounded,
+                    text: 'REPORTS',
+                  ),
+                ],
+                selectedIndex: index,
+                onTabChange: (index) {
+                  if (ref.watch(boolProvider).isExpanded) {
+                    ref.read(boolProvider.notifier).toggleExpanded();
+                  }
+                  ref.read(boolProvider.notifier).changeIndex(index);
+                },
               ),
             ),
           ),
-
-          // Products List
-          Expanded(
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Card(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
-                  child: ListTile(
-                    leading: Image.asset(
-                      'assets/product.png',
-                      width: 60,
-                    ),
-                    title: const Text(
-                      'DAIRY MILK',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: const Text('Chocolate'),
-                    trailing: SizedBox(
-                      width: 120,
-                      child: Row(
-                        children: [
-                          const Text(
-                            '\$100/pcs',
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.remove),
-                            onPressed: () {},
-                          ),
-                          const Text('0'),
-                          IconButton(
-                            icon: const Icon(Icons.add),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
+        ),
       ),
     );
-  }
-
-  Widget _buildCategoryItem(String icon, String label) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8),
-      child: Column(
-        children: [
-          CircleAvatar(
-            radius: 25,
-            backgroundColor: Colors.grey[200],
-            child: CustomSvg(name: icon),
-          ),
-          const SizedBox(height: 8),
-          Text(label),
-        ],
-      ),
-    );
-  }
-}
-
-class CartPage extends StatelessWidget {
-  const CartPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Cart Page'));
-  }
-}
-
-class BillingPage extends StatelessWidget {
-  const BillingPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Billing Page'));
-  }
-}
-
-class OrdersPage extends StatelessWidget {
-  const OrdersPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Orders Page'));
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Profile Page'));
   }
 }

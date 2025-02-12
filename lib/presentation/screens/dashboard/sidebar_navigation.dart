@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:retail_mobile/config/app_colors.dart';
-import 'package:retail_mobile/presentation/widgets/common_image_widget.dart';
 
 class SidebarNavigation extends StatelessWidget {
   const SidebarNavigation({super.key});

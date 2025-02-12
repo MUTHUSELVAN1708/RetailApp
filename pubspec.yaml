@@ -39,6 +39,8 @@ dependencies:
   flutter_dotenv: ^5.2.1
   pin_code_fields:
   logger: ^2.5.0
+  google_nav_bar: ^5.0.7
+  mobile_scanner:
 
 dev_dependencies:
   flutter_test:
