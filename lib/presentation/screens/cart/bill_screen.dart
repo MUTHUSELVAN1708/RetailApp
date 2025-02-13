@@ -21,6 +21,7 @@ class _BillScreenState extends State<BillScreen> {
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
+        titleSpacing: -10,
         title: Text('BILL'),
         actions: [
           IconButton(

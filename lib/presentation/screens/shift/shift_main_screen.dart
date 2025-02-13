@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:retail_mobile/config/app_colors.dart';
 import 'package:retail_mobile/presentation/screens/shift/business_date_picker.dart';
 import 'package:retail_mobile/presentation/screens/shift/shift_list_screen.dart';
+import 'package:retail_mobile/presentation/screens/shift/shift_start_screen.dart';
+import 'package:retail_mobile/presentation/widgets/common_gesture_button.dart';
 
 class ShiftMainScreen extends StatelessWidget {
   const ShiftMainScreen({super.key});
@@ -30,19 +32,14 @@ class ShiftScreen extends StatelessWidget {
                 style: TextStyle(
                     color: AppColors.primaryButtonColor, fontSize: 18),
               ),
-              GestureDetector(
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 9),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryButtonColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    'Start Shift',
-                    style: TextStyle(fontSize: 16, color: AppColors.whiteColor),
-                  ),
-                ),
+              CommonGestureButton(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ShiftStartScreen();
+                  }));
+                },
+                text: 'Start Shift',
+                color: AppColors.primaryButtonColor,
               )
             ],
           ),
@@ -95,7 +92,7 @@ class ShiftScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   side: BorderSide(color: AppColors.primaryButtonColor),
                 ),
-                backgroundColor: Color(0xFFFFDEE4),
+                // backgroundColor: Color(0xFFFFDEE4),
               ),
               child: Text(
                 'View',

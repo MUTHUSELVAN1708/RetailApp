@@ -78,7 +78,8 @@ class _CartScreenState extends State<CartScreen>
           ),
           ExpandableArrowMenu(
             animation: _animation,
-            isCart: true,
+            horizontalMargin: 15,
+            isReplacement: false,
           ),
         ],
       ),

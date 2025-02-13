@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retail_mobile/config/app_colors.dart';
+import 'package:retail_mobile/presentation/screens/shift/shift_end_dialog.dart';
 
 class ShiftListScreen extends StatelessWidget {
   final List<Map<String, String>> shiftData = [
@@ -85,34 +86,22 @@ class ShiftListScreen extends StatelessWidget {
                 Positioned(
                     top: 10,
                     right: 10,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          height: 10,
-                          width: 30,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.edit,
-                              color: AppColors.primaryButtonColor,
-                              size: 18,
-                            ),
-                          ),
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => const ShiftEndDialog(),
+                        );
+                      },
+                      child: SizedBox(
+                        height: 10,
+                        width: 30,
+                        child: Icon(
+                          Icons.remove_red_eye_outlined,
+                          color: AppColors.primaryButtonColor,
+                          size: 20,
                         ),
-                        SizedBox(
-                          height: 10,
-                          width: 30,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.delete_forever,
-                              color: AppColors.primaryButtonColor,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ))
               ],
             ),

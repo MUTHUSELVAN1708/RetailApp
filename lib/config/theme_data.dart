@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:retail_mobile/config/app_colors.dart';
 
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.white,
-    primaryColor: Colors.blue,
+    scaffoldBackgroundColor: AppColors.whiteColor,
+    primaryColor: AppColors.whiteColor,
     colorScheme: ColorScheme.light(
-      primary: Colors.blue,
+      primary: AppColors.whiteColor,
       secondary: Colors.orangeAccent,
-      surface: Colors.white,
+      surface: AppColors.whiteColor,
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.whiteColor,
       elevation: 0,
       titleTextStyle: TextStyle(
         color: Colors.black,
@@ -26,13 +27,13 @@ class AppTheme {
           color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
     ),
     buttonTheme: ButtonThemeData(
-      buttonColor: Colors.blue,
+      buttonColor: AppColors.whiteColor,
       textTheme: ButtonTextTheme.primary,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,
-        backgroundColor: Colors.blue,
+        backgroundColor: AppColors.whiteColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -43,15 +44,15 @@ class AppTheme {
       fillColor: Colors.white,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.grey),
+        borderSide: BorderSide(color: Color(0xFFC3C3C3)),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.grey),
+        borderSide: BorderSide(color: Color(0xFFC3C3C3)),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.grey),
+        borderSide: BorderSide(color: Color(0xFFC3C3C3)),
       ),
     ),
   );
