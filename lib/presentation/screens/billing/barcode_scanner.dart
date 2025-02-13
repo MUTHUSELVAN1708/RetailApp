@@ -44,24 +44,32 @@ class _BarcodeScannerState extends State<BarcodeScanner> {
                 controller: _searchController,
                 cursorHeight: 15,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.search,
-                    size: 20,
-                    color: AppColors.primaryButtonColor,
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 4),
+                    child: Icon(
+                      Icons.search,
+                      size: 20,
+                      color: AppColors.primaryButtonColor,
+                    ),
                   ),
-                  prefixIconConstraints:
-                      BoxConstraints(maxHeight: 20, maxWidth: 30),
+                  prefixIconConstraints: BoxConstraints(
+                    minWidth: 30,
+                    minHeight: 20,
+                  ),
                   hintText: '${widget.isCart ? 'Search ' : ''}Product/Item No',
                   contentPadding: const EdgeInsets.only(left: 7),
                   enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(color: Color(0xFFE4E4E4))),
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(color: Color(0xFFE4E4E4)),
+                  ),
                   disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(color: Color(0xFFE4E4E4))),
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(color: Color(0xFFE4E4E4)),
+                  ),
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(color: Color(0xFFE4E4E4))),
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(color: Color(0xFFE4E4E4)),
+                  ),
                 ),
                 onChanged: (value) {},
               ),
@@ -113,6 +121,7 @@ class BarcodeScannerScreen extends StatelessWidget {
                 Icons.arrow_back_ios,
                 color: AppColors.primaryButtonColor,
               )),
+          titleSpacing: -10,
           title: Text(
             'Scan Barcode',
             style: TextStyle(color: AppColors.primaryButtonColor),

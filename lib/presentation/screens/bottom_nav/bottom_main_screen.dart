@@ -6,6 +6,7 @@ import 'package:retail_mobile/presentation/screens/billing/billing_screen.dart';
 import 'package:retail_mobile/presentation/screens/cart/bill_screen.dart';
 import 'package:retail_mobile/presentation/screens/cart/cart_screen.dart';
 import 'package:retail_mobile/presentation/screens/cart/view_bill_screen.dart';
+import 'package:retail_mobile/presentation/screens/dashboard/dashboard_screen.dart';
 import 'package:retail_mobile/presentation/screens/dashboard/sidebar_navigation.dart';
 import 'package:retail_mobile/presentation/screens/shift/shift_main_screen.dart';
 import 'package:retail_mobile/presentation/widgets/custom_svg.dart';
@@ -22,7 +23,7 @@ class _BottomMainScreenState extends ConsumerState<BottomMainScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final List<Widget> _pages = [
-    const ViewBillScreen(),
+    const DashboardScreen(),
     const CartScreen(),
     const BillingScreen(),
     const ShiftMainScreen(),
@@ -48,25 +49,29 @@ class _BottomMainScreenState extends ConsumerState<BottomMainScreen> {
           leadingWidth: 150,
           leading: Row(
             children: [
-              IconButton(
-                padding: EdgeInsets.zero,
-                icon: CustomSvg(
-                  name: 'menu_icon',
-                  width: 25,
-                  height: 25,
-                ),
-                onPressed: () {
+              const SizedBox(
+                width: 10,
+              ),
+              GestureDetector(
+                onTap: () {
                   _scaffoldKey.currentState?.openDrawer();
                 },
-              ),
-              IconButton(
-                padding: EdgeInsets.zero,
-                icon: CustomSvg(
-                  name: 'notification',
-                  width: 25,
-                  height: 20,
+                child: CustomSvg(
+                  name: 'menu_icon',
+                  width: 30,
+                  height: 30,
                 ),
-                onPressed: () {},
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: CustomSvg(
+                  name: 'notification',
+                  width: 27,
+                  height: 22,
+                ),
               ),
             ],
           ),
