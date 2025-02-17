@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:retail_mobile/config/app_colors.dart';
+import 'package:retail_mobile/presentation/screens/cart/bill_screen.dart';
 import 'package:retail_mobile/presentation/widgets/custom_button.dart';
 import 'package:retail_mobile/state_management/state/floating_state.dart';
 
 class CartTotalAmountCard extends ConsumerStatefulWidget {
   final bool isViewBill;
+  final bool isBillSection;
   final AnimationController controller;
 
   const CartTotalAmountCard(
-      {super.key, required this.isViewBill, required this.controller});
+      {super.key,
+      required this.isViewBill,
+      required this.controller,
+      this.isBillSection = false});
 
   @override
   ConsumerState createState() => _CartTotalAmountCardState();
@@ -39,7 +44,7 @@ class _CartTotalAmountCardState extends ConsumerState<CartTotalAmountCard>
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Container(
-          height: 200,
+          height: (!widget.isViewBill && !widget.isBillSection) ? 200 : null,
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -50,7 +55,7 @@ class _CartTotalAmountCardState extends ConsumerState<CartTotalAmountCard>
             physics: BouncingScrollPhysics(),
             child: Column(
               children: [
-                if (!widget.isViewBill) ...[
+                if (!widget.isViewBill || widget.isBillSection) ...[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -61,7 +66,8 @@ class _CartTotalAmountCardState extends ConsumerState<CartTotalAmountCard>
                   ),
                   SizedBox(height: 10),
                 ],
-                if (!widget.isViewBill) _buildRow("Total Qty", "45"),
+                if (!widget.isViewBill || widget.isBillSection)
+                  _buildRow("Total Qty", "45"),
                 _buildRow("Discount", "(5%) \$45"),
                 _buildRowBold("Round Off", "Rs 415.00/-",
                     color: Color(0xFF4D4D4D)),
@@ -82,22 +88,74 @@ class _CartTotalAmountCardState extends ConsumerState<CartTotalAmountCard>
                         Expanded(
                           child: CustomButton(
                               text: "Clear",
-                              color: AppColors.primaryButtonColor),
+                              color: AppColors.primaryButtonColor,
+                              onTap: () {}),
                         ),
                         Expanded(
                           child: CustomButton(
                               text: "Share",
-                              color: AppColors.primaryButtonColor),
+                              color: AppColors.primaryButtonColor,
+                              onTap: () {}),
                         ),
                         Expanded(
                           child: CustomButton(
                               text: "Reprint Token",
-                              color: AppColors.primaryButtonColor),
+                              color: AppColors.primaryButtonColor,
+                              onTap: () {}),
                         ),
                         Expanded(
                             child: CustomButton(
                                 text: "Reprint Bill",
-                                color: Color(0xFF3D3D3D))),
+                                color: Color(0xFF3D3D3D),
+                                onTap: () {})),
+                        GestureDetector(
+                          onTap: () {
+                            toggleButtons();
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 2),
+                            decoration: BoxDecoration(
+                                color: AppColors.primaryButtonColor,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Icon(
+                              ref.watch(boolProvider).isExpanded
+                                  ? Icons.keyboard_arrow_down
+                                  : Icons.keyboard_arrow_up,
+                              color: AppColors.whiteColor,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ] else if (widget.isBillSection) ...[
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: CustomButton(
+                              text: "Pay",
+                              color: AppColors.primaryButtonColor,
+                              onTap: () {}),
+                        ),
+                        Expanded(
+                          child: CustomButton(
+                            text: "Pay & Print",
+                            color: AppColors.primaryButtonColor,
+                            onTap: () {},
+                          ),
+                        ),
+                        Expanded(
+                            child: CustomButton(
+                          text: "Cancel",
+                          color: Color(0xFF3D3D3D),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                        )),
                         GestureDetector(
                           onTap: () {
                             toggleButtons();
@@ -132,7 +190,15 @@ class _CartTotalAmountCardState extends ConsumerState<CartTotalAmountCard>
                                 borderRadius: BorderRadius.circular(10)),
                             minimumSize: Size(double.infinity, 35),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            if (ref.watch(boolProvider).isExpanded) {
+                              ref.read(boolProvider.notifier).toggleExpanded();
+                            }
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) {
+                              return BillScreen();
+                            }));
+                          },
                           child: Text("Continue",
                               style: TextStyle(
                                   color: Colors.white,
@@ -165,7 +231,6 @@ class _CartTotalAmountCardState extends ConsumerState<CartTotalAmountCard>
                     ],
                   ),
                 ],
-                // if (isExpanded) _buildBottomOptions()
               ],
             ),
           ),

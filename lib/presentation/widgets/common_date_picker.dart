@@ -4,13 +4,14 @@ import 'package:retail_mobile/config/app_colors.dart';
 
 class DatePickerHelper {
   /// **Normal Date Picker**
-  static Future<DateTime?> showDatePickerDialog(BuildContext context) async {
+  static Future<DateTime?> showDatePickerDialog(BuildContext context,
+      {DateTime? firstDate, DateTime? initialDate}) async {
     DateTime today = DateTime.now();
     DateTime fiveYearsAgo = today.subtract(const Duration(days: 5 * 365));
     return await showDatePicker(
       context: context,
-      initialDate: today,
-      firstDate: fiveYearsAgo,
+      initialDate: initialDate ?? today,
+      firstDate: firstDate ?? fiveYearsAgo,
       lastDate: today,
       builder: (context, child) {
         return Theme(

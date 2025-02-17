@@ -1,10 +1,36 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:retail_mobile/config/app_colors.dart';
+import 'package:retail_mobile/presentation/widgets/common_date_picker.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
+
+  @override
+  ConsumerState<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends ConsumerState<DashboardScreen> {
+  DateTime? _fromDate;
+  DateTime? _toDate;
+
+  Future<void> _pickDate(BuildContext context, bool isFrom) async {
+    DateTime? dateTime = await DatePickerHelper.showDatePickerDialog(context,
+        firstDate: isFrom ? null : _fromDate,
+        initialDate: isFrom ? _fromDate : _toDate);
+    if (dateTime != null) {
+      setState(() {
+        if (isFrom) {
+          _fromDate = dateTime;
+        } else {
+          _toDate = dateTime;
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +84,9 @@ class DashboardScreen extends StatelessWidget {
           children: [
             Expanded(
                 child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                _pickDate(context, true);
+              },
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -69,8 +97,13 @@ class DashboardScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'From Date',
-                      style: TextStyle(color: Color(0xFFCFCFCF)),
+                      _fromDate == null
+                          ? 'From Date'
+                          : DateFormat('dd-MM-yyyy').format(_fromDate!),
+                      style: TextStyle(
+                          color: _fromDate == null
+                              ? Color(0xFFCFCFCF)
+                              : AppColors.secondaryColor),
                     ),
                     Icon(
                       Icons.calendar_month_rounded,
@@ -84,7 +117,11 @@ class DashboardScreen extends StatelessWidget {
             const SizedBox(width: 10),
             Expanded(
                 child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                if (_fromDate != null) {
+                  _pickDate(context, false);
+                }
+              },
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -95,8 +132,13 @@ class DashboardScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'To Date',
-                      style: TextStyle(color: Color(0xFFCFCFCF)),
+                      _toDate == null
+                          ? 'To Date'
+                          : DateFormat('dd-MM-yyyy').format(_toDate!),
+                      style: TextStyle(
+                          color: _toDate == null
+                              ? Color(0xFFCFCFCF)
+                              : AppColors.secondaryColor),
                     ),
                     Icon(
                       Icons.calendar_month_rounded,
@@ -444,24 +486,37 @@ class TopSoldItemsSection extends StatelessWidget {
 class TransactionSummary extends StatelessWidget {
   TransactionSummary({super.key});
 
-  final List<Map<String, dynamic>> leftTransactions = [
-    {'name': 'Cash', 'amount': 450},
-    {'name': 'Card', 'amount': 450},
-    {'name': 'Pettycash', 'amount': 450},
-    {'name': 'Coupon', 'amount': 450},
-    {'name': 'Advance Payment', 'amount': 450},
+  final List<Map<String, dynamic>> transactions = [
+    {'name': 'Cash', 'amount': 0},
+    {'name': 'Card', 'amount': 0},
+    {'name': 'Pettycash', 'amount': 0},
+    {'name': 'Coupon', 'amount': 0},
+    {'name': 'Advance Payment', 'amount': 0},
+    {'name': 'Paytm', 'amount': 60},
+    {'name': 'UPI', 'amount': 70},
+    {'name': 'Amazon Pay', 'amount': 80},
+    {'name': 'Google Pay', 'amount': 90},
+    {'name': 'PhonePe', 'amount': 100},
   ];
 
-  final List<Map<String, dynamic>> rightTransactions = [
-    {'name': 'Paytm', 'amount': 450},
-    {'name': 'UPI', 'amount': 450},
-    {'name': 'Amazon Pay', 'amount': 450},
-    {'name': 'Google Pay', 'amount': 450},
-    {'name': 'Phonepe', 'amount': 450},
+  final List<Map<String, dynamic>> color = [
+    {'color': Color(0xFFF67676)},
+    {'color': Color(0xFFF0E720)},
+    {'color': Color(0xFF2AEB9E)},
+    {'color': Color(0xFF8B9AFE)},
+    {'color': Color(0xFFDA36B6)},
+    {'color': Color(0xFFFF5997)},
+    {'color': Color(0xFFFFBD30)},
+    {'color': Color(0xFFF1F278)},
+    {'color': Color(0xFF37C179)},
+    {'color': Color(0xFF23DFF2)},
   ];
 
   @override
   Widget build(BuildContext context) {
+    double totalAmount =
+        transactions.fold(0, (sum, item) => sum + item['amount']);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -473,61 +528,73 @@ class TransactionSummary extends StatelessWidget {
             color: AppColors.primaryButtonColor,
           ),
         ),
-        const SizedBox(
-          height: 8,
-        ),
+        const SizedBox(height: 8),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            border: Border.all(color: Color(0xFFCFCFCF)),
+            border: Border.all(color: Color(0xFFECECEC)),
           ),
           child: Column(
             children: [
               SizedBox(
                 height: 24,
                 child: Row(
-                  children: List.generate(
-                    10,
-                    (index) => Expanded(
+                  children: transactions.map((transaction) {
+                    double percentage =
+                        (transaction['amount'] / totalAmount) * 100;
+                    int dynamicFlex = percentage.toInt();
+                    int minFlex = 10;
+                    int finalFlex = dynamicFlex + minFlex;
+
+                    Color boxColor =
+                        color[transactions.indexOf(transaction)]['color'];
+
+                    return Expanded(
+                      flex: finalFlex,
                       child: Container(
-                        color:
-                            Colors.primaries[index % Colors.primaries.length],
-                        child: const Center(
+                        margin: const EdgeInsets.all(0.5),
+                        color: boxColor,
+                        child: Center(
                           child: Text(
-                            '3%',
+                            '${percentage.toInt()}%',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: AppColors.blackColor,
                               fontSize: 12,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  }).toList(),
                 ),
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: leftTransactions
-                          .map((transaction) => _buildTransactionRow(
-                              transaction['name'], transaction['amount']))
-                          .toList(),
-                    ),
+              const SizedBox(height: 8),
+              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Expanded(
+                  child: Column(
+                    children: transactions
+                        .sublist(0, 5)
+                        .map((transaction) => _buildTransactionRow(
+                            transaction['name'],
+                            transaction['amount'],
+                            Colors.pink))
+                        .toList(),
                   ),
-                  const SizedBox(width: 24),
-                  Expanded(
-                    child: Column(
-                      children: rightTransactions
-                          .map((transaction) => _buildTransactionRow(
-                              transaction['name'], transaction['amount']))
-                          .toList(),
-                    ),
+                ),
+                const SizedBox(width: 24),
+                Expanded(
+                  child: Column(
+                    children: transactions
+                        .sublist(5, 10)
+                        .map((transaction) => _buildTransactionRow(
+                            transaction['name'],
+                            transaction['amount'],
+                            Colors.pink))
+                        .toList(),
                   ),
-                ],
-              ),
+                ),
+              ]),
             ],
           ),
         ),
@@ -535,30 +602,31 @@ class TransactionSummary extends StatelessWidget {
     );
   }
 
-  Widget _buildTransactionRow(String name, int amount) {
+  Widget _buildTransactionRow(String name, int amount, Color textColor) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          Text(
-            name,
-            style: const TextStyle(
-              color: Colors.pink,
-              fontSize: 16,
+          Expanded(
+            child: Text(
+              name,
+              style: TextStyle(
+                color: Color(0xFFF67676),
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           const Text(
             ' : ',
-            style: TextStyle(
-              color: Colors.pink,
-              fontSize: 16,
-            ),
+            style: TextStyle(fontSize: 16),
           ),
           Text(
             amount.toString(),
-            style: const TextStyle(
-              color: Colors.pink,
+            style: TextStyle(
+              color: Color(0xFF3C3C3C),
               fontSize: 16,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ],

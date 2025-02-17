@@ -18,6 +18,7 @@ class AppTheme {
         fontSize: 18,
         fontWeight: FontWeight.bold,
       ),
+      titleSpacing: -10,
       iconTheme: IconThemeData(color: Colors.black),
     ),
     textTheme: TextTheme(

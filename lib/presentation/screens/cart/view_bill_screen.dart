@@ -7,6 +7,7 @@ import 'package:retail_mobile/presentation/screens/cart/bill_list_screen.dart';
 import 'package:retail_mobile/presentation/screens/cart/cart_total_amount_card.dart';
 import 'package:retail_mobile/presentation/screens/cart/expandable_arrow_menu.dart';
 import 'package:retail_mobile/presentation/widgets/common_date_picker.dart';
+import 'package:retail_mobile/state_management/state/floating_state.dart';
 
 class ViewBillScreen extends ConsumerStatefulWidget {
   const ViewBillScreen({super.key});
@@ -45,71 +46,78 @@ class _ViewBillScreenState extends ConsumerState<ViewBillScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16, top: 5),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              GestureDetector(
-                                child: Icon(
-                                  Icons.arrow_back_ios,
-                                  color: AppColors.primaryButtonColor,
-                                  size: 22,
+      body: GestureDetector(
+        onTap: () {
+          if (ref.watch(boolProvider).isExpanded) {
+            ref.read(boolProvider.notifier).toggleExpanded();
+          }
+        },
+        child: SafeArea(
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16, top: 5),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  child: Icon(
+                                    Icons.arrow_back_ios,
+                                    color: AppColors.primaryButtonColor,
+                                    size: 22,
+                                  ),
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
                                 ),
-                                onTap: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              const SizedBox(width: 10),
-                              Text(
-                                'View Bill',
-                                style: TextStyle(
-                                  color: AppColors.primaryButtonColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                                const SizedBox(width: 10),
+                                Text(
+                                  'View Bill',
+                                  style: TextStyle(
+                                    color: AppColors.primaryButtonColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          _buildTextField('Bill Number'),
-                          _buildTextField('Bill Date',
-                              icon: Icons.calendar_month_rounded),
-                          _buildTextField('Customer Name',
-                              initialValue: 'Will Jacks'),
-                          _buildTextField('Phone No',
-                              initialValue: '8906573410', enabled: true),
-                          _buildTextField('Customer GSTIN',
-                              initialValue: '8906573410', enabled: true),
-                          const SizedBox(height: 10),
-                          SizedBox(height: 250, child: BillListScreen()),
-                          const SizedBox(height: 10),
-                          CartTotalAmountCard(
-                            isViewBill: true,
-                            controller: appAnimation.controller,
-                          ),
-                        ],
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            _buildTextField('Bill Number'),
+                            _buildTextField('Bill Date',
+                                icon: Icons.calendar_month_rounded),
+                            _buildTextField('Customer Name',
+                                initialValue: 'Will Jacks'),
+                            _buildTextField('Phone No',
+                                initialValue: '8906573410', enabled: true),
+                            _buildTextField('Customer GSTIN',
+                                initialValue: '8906573410', enabled: true),
+                            const SizedBox(height: 10),
+                            SizedBox(height: 250, child: BillListScreen()),
+                            const SizedBox(height: 10),
+                            CartTotalAmountCard(
+                              isViewBill: true,
+                              controller: appAnimation.controller,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            ExpandableArrowMenu(
-              animation: appAnimation.animation,
-              horizontalMargin: 30,
-            ),
-          ],
+              ExpandableArrowMenu(
+                animation: appAnimation.animation,
+                horizontalMargin: 30,
+              ),
+            ],
+          ),
         ),
       ),
     );

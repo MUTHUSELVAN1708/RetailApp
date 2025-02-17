@@ -8,7 +8,9 @@ import 'dart:io';
 import 'package:retail_mobile/presentation/widgets/common_image_widget.dart';
 
 class AddStoreDetails extends StatefulWidget {
-  const AddStoreDetails({super.key});
+  final bool isEdit;
+
+  const AddStoreDetails({super.key, this.isEdit = false});
 
   @override
   State<AddStoreDetails> createState() => _AddStoreDetailsState();
@@ -41,15 +43,17 @@ class _AddStoreDetailsState extends State<AddStoreDetails> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
-                    'Add Company Details',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primaryButtonColor,
+                  if (!widget.isEdit) ...[
+                    const Text(
+                      'Add Company Details',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primaryButtonColor,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
+                    const SizedBox(height: 20),
+                  ],
                   DottedBorder(
                     color: AppColors.primaryButtonColor,
                     strokeWidth: 1.5,
@@ -64,7 +68,7 @@ class _AddStoreDetailsState extends State<AddStoreDetails> {
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey.shade300),
+                          // border: Border.all(color: Colors.grey.shade300),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Column(
@@ -133,8 +137,8 @@ class _AddStoreDetailsState extends State<AddStoreDetails> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: const Text(
-                      'Continue',
+                    child: Text(
+                      widget.isEdit ? 'Update' : 'Continue',
                       style:
                           TextStyle(color: AppColors.whiteColor, fontSize: 16),
                     ),
@@ -164,7 +168,6 @@ class _AddStoreDetailsState extends State<AddStoreDetails> {
           ),
           TextFormField(
             decoration: InputDecoration(
-              labelText: label,
               hintText: hint,
               floatingLabelBehavior: FloatingLabelBehavior.never,
               border: OutlineInputBorder(

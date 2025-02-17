@@ -157,34 +157,14 @@ class _ShiftEndScreenState extends State<ShiftEndScreen> {
               ),
               adjustmentFields(),
               SizedBox(height: 50),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primaryButtonColor,
-                      minimumSize: Size(150, 40),
-                    ),
-                    onPressed: () {},
-                    child: Text("Print",
-                        style: TextStyle(color: Colors.white, fontSize: 16)),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.whiteColor,
-                        minimumSize: Size(150, 40),
-                        shape: RoundedRectangleBorder(
-                            side:
-                                BorderSide(color: AppColors.primaryButtonColor),
-                            borderRadius: BorderRadius.circular(10))),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("Cancel",
-                        style: TextStyle(
-                            color: AppColors.primaryButtonColor, fontSize: 16)),
-                  ),
-                ],
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primaryButtonColor,
+                  minimumSize: Size(double.infinity, 40),
+                ),
+                onPressed: () {},
+                child: Text("Print",
+                    style: TextStyle(color: Colors.white, fontSize: 16)),
               ),
             ],
           ),
