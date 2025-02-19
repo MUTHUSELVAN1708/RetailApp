@@ -16,12 +16,36 @@ class CommonListOfItems extends ConsumerStatefulWidget {
 }
 
 class _CommonListOfItemsState extends ConsumerState<CommonListOfItems> {
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+
+    // widget.pageController?.addListener(() {
+    //   int newIndex = widget.pageController!.page!.round();
+    //   ref.read(boolProvider.notifier).pageIndex(newIndex);
+    //   _scrollToIndex(newIndex);
+    // });
+  }
+
+  // void _scrollToIndex(int index) {
+  //   double scrollPosition = index * 80.0;
+  //   _scrollController.animateTo(
+  //     scrollPosition,
+  //     duration: Duration(milliseconds: 300),
+  //     curve: Curves.easeInOut,
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       height: 90,
       child: ListView.builder(
+        controller: _scrollController, // Attach the scroll controller
         scrollDirection: Axis.horizontal,
         itemCount: widget.detailsList.length,
         itemBuilder: (context, index) {
@@ -32,16 +56,15 @@ class _CommonListOfItemsState extends ConsumerState<CommonListOfItems> {
   }
 
   Widget handleList(Details settingsMethod, int index) {
+    final boolState = ref.watch(boolProvider);
     return GestureDetector(
       onTap: () {
         ref.read(boolProvider.notifier).pageIndex(index);
-        if (widget.pageController != null) {
-          widget.pageController?.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          );
-        }
+        widget.pageController?.animateToPage(
+          index,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
       },
       child: SizedBox(
         width: 80,
@@ -54,13 +77,18 @@ class _CommonListOfItemsState extends ConsumerState<CommonListOfItems> {
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: AppColors.veryLightGrey),
+                border: Border.all(
+                    color: boolState.settingsPageIndex == index
+                        ? AppColors.primaryButtonColor
+                        : AppColors.veryLightGrey),
               ),
               child: CustomSvg(
                 name: settingsMethod.iconName,
                 width: 30,
                 height: 30,
-                color: AppColors.primaryButtonColor,
+                color: boolState.settingsPageIndex == index
+                    ? AppColors.primaryButtonColor
+                    : AppColors.veryLightGrey,
               ),
             ),
             SizedBox(height: 6),
@@ -68,7 +96,11 @@ class _CommonListOfItemsState extends ConsumerState<CommonListOfItems> {
               settingsMethod.name,
               maxLines: 2,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 12, color: AppColors.veryLightGrey),
+              style: TextStyle(
+                  fontSize: 12,
+                  color: boolState.settingsPageIndex == index
+                      ? AppColors.primaryButtonColor
+                      : AppColors.veryLightGrey),
             ),
           ],
         ),

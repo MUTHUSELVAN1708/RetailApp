@@ -16,97 +16,136 @@ class _SettingsOptionsState extends State<SettingsOtherScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildColumn('Date & Time', 'Auto', 'Manual', mrpEnabled),
-          _buildColumn('Price Change', 'Enable', 'Disable', discountType),
-          _buildColumn('Bill with stock', 'Enable', 'Disable', taxType),
-          _buildColumn('Bill no daily reset', 'Enable', 'Disable', mrpEnabled),
-          _buildColumn(
-              'Bill amount round off', 'Enable', 'Disable', mrpEnabled),
-          _buildColumn(
-              'Sales man iD display', 'Enable', 'Disable', discountType),
-          _buildColumn('Expiry date', 'Enable', 'Disable', taxType),
-          _buildColumn('Header print bold', 'Enable', 'Disable', mrpEnabled),
-          _buildColumn(
-              'Automatic stock download', 'Enable', 'Disable', mrpEnabled),
-          _buildColumn(
-              'Exchange bill Print Option', 'Enable', 'Disable', discountType),
-          _buildColumn('Tax', 'Forward', 'Reverse', taxType),
-          _buildColumn('Discount Type', 'Itemwise', 'BillWise', discountType),
-          _buildColumn('Apply Discount (Forward Tax-Billwise)', 'Pre-Tax',
-              'Post-Tax', taxType),
-          _buildColumn('MRP (Rate Price Difference Print)', 'Enable', 'Disable',
-              mrpEnabled),
-          const Text(
-            'Fast Billing Mode',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Wrap(
-            spacing: 24,
-            runSpacing: -12,
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildRadioOption(
-                value: 'Items',
-                groupValue: billingMode,
-                onChanged: (value) => setState(() => billingMode = value!),
+              _buildColumn('Date & Time', 'Auto', 'Manual', mrpEnabled),
+              _buildColumn('Price Change', 'Enable', 'Disable', discountType),
+              _buildColumn('Bill with stock', 'Enable', 'Disable', taxType),
+              _buildColumn(
+                  'Bill no daily reset', 'Enable', 'Disable', mrpEnabled),
+              _buildColumn(
+                  'Bill amount round off', 'Enable', 'Disable', mrpEnabled),
+              _buildColumn(
+                  'Sales man iD display', 'Enable', 'Disable', discountType),
+              _buildColumn('Expiry date', 'Enable', 'Disable', taxType),
+              _buildColumn(
+                  'Header print bold', 'Enable', 'Disable', mrpEnabled),
+              _buildColumn(
+                  'Automatic stock download', 'Enable', 'Disable', mrpEnabled),
+              _buildColumn('Exchange bill Print Option', 'Enable', 'Disable',
+                  discountType),
+              _buildColumn('Tax', 'Forward', 'Reverse', taxType),
+              _buildColumn(
+                  'Discount Type', 'Itemwise', 'BillWise', discountType),
+              _buildColumn('Apply Discount (Forward Tax-Billwise)', 'Pre-Tax',
+                  'Post-Tax', taxType),
+              _buildColumn('MRP (Rate Price Difference Print)', 'Enable',
+                  'Disable', mrpEnabled),
+              const Text(
+                'Fast Billing Mode',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-              _buildRadioOption(
-                value: 'Dept/Items',
-                groupValue: billingMode,
-                onChanged: (value) => setState(() => billingMode = value!),
+              const SizedBox(height: 4),
+              Wrap(
+                spacing: 24,
+                runSpacing: -12,
+                children: [
+                  _buildRadioOption(
+                    value: 'Items',
+                    groupValue: billingMode,
+                    onChanged: (value) => setState(() => billingMode = value!),
+                  ),
+                  _buildRadioOption(
+                    value: 'Dept/Items',
+                    groupValue: billingMode,
+                    onChanged: (value) => setState(() => billingMode = value!),
+                  ),
+                  _buildRadioOption(
+                    value: 'Brand/Items',
+                    groupValue: billingMode,
+                    onChanged: (value) => setState(() => billingMode = value!),
+                  ),
+                  _buildRadioOption(
+                    value: 'Dept/Categ/Items',
+                    groupValue: billingMode,
+                    onChanged: (value) => setState(() => billingMode = value!),
+                  ),
+                ],
               ),
-              _buildRadioOption(
-                value: 'Brand/Items',
-                groupValue: billingMode,
-                onChanged: (value) => setState(() => billingMode = value!),
-              ),
-              _buildRadioOption(
-                value: 'Dept/Categ/Items',
-                groupValue: billingMode,
-                onChanged: (value) => setState(() => billingMode = value!),
-              ),
+              const SizedBox(height: 10),
+              _buildColumn('Reward Points', 'Enable', 'Disable', taxType),
+              _buildColumn('Display Inactive Entities in Reports', 'Enable',
+                  'Disable', mrpEnabled),
+              _buildColumn(
+                  'Bill Amount Font Options', 'Bold', 'DH', mrpEnabled),
+              _buildColumn(
+                  'Jurisdictions Print', 'Enable', 'Disable', discountType),
+              _buildColumn('Cumulative Billing', 'Enable', 'Disable', taxType),
+              _buildColumn('Open Price', 'Enable', 'Disable', mrpEnabled),
+              _buildColumn('Share Bill', 'Bold', 'DH', mrpEnabled),
+              _buildColumn('Training Mode', 'Enable', 'Disable', discountType),
+              _buildColumn('Item\'s Name Print In Bill', 'Long Name',
+                  'Short Name', taxType),
+              _buildColumn('Print Item Wise Discount In Bill', 'Enable',
+                  'Disable', mrpEnabled),
+              _buildColumn('Standalone Status', 'Bold', 'DH', mrpEnabled),
+              _buildColumn('Display Discount Message', 'Enable', 'Disable',
+                  discountType),
+              _buildColumn('Two Copy Bill Print', 'Enable', 'Disable', taxType),
+              _buildColumn('Multiple Salesman Bill Amount', 'Enable', 'Disable',
+                  mrpEnabled),
+              _buildColumn('Rupee Billing Display', 'Bold', 'DH', mrpEnabled),
+              _buildColumn(
+                  'Quick Access Qty', 'Enable', 'Disable', discountType),
+              _buildColumn('Bulk Break', 'Enable', 'Disable', taxType),
+              _buildColumn('Shift End', 'Enable', 'Disable', mrpEnabled),
+              _buildColumn('Print User Name', 'Bold', 'DH', mrpEnabled),
+              _buildColumn('Delete Option (Items, Customers and Suppliers)',
+                  'Enable', 'Disable', discountType),
+              _buildColumn(
+                  'Print Customer Address', 'Enable', 'Disable', taxType),
+              _buildColumn(
+                  'Print Reward Points', 'Enable', 'Disable', mrpEnabled),
+              // ElevatedButton(
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor: AppColors.primaryButtonColor,
+              //     minimumSize: Size(double.infinity, 40),
+              //   ),
+              //   onPressed: () {},
+              //   child: Text("Apply",
+              //       style: TextStyle(color: Colors.white, fontSize: 16)),
+              // ),
+              const SizedBox(
+                height: 10,
+              )
             ],
           ),
-          const SizedBox(height: 10),
-          _buildColumn('Reward Points', 'Enable', 'Disable', taxType),
-          _buildColumn('Display Inactive Entities in Reports', 'Enable',
-              'Disable', mrpEnabled),
-          _buildColumn('Bill Amount Font Options', 'Bold', 'DH', mrpEnabled),
-          _buildColumn(
-              'Jurisdictions Print', 'Enable', 'Disable', discountType),
-          _buildColumn('Cumulative Billing', 'Enable', 'Disable', taxType),
-          _buildColumn('Open Price', 'Enable', 'Disable', mrpEnabled),
-          _buildColumn('Share Bill', 'Bold', 'DH', mrpEnabled),
-          _buildColumn('Training Mode', 'Enable', 'Disable', discountType),
-          _buildColumn(
-              'Item\'s Name Print In Bill', 'Long Name', 'Short Name', taxType),
-          _buildColumn('Print Item Wise Discount In Bill', 'Enable', 'Disable',
-              mrpEnabled),
-          _buildColumn('Standalone Status', 'Bold', 'DH', mrpEnabled),
-          _buildColumn(
-              'Display Discount Message', 'Enable', 'Disable', discountType),
-          _buildColumn('Two Copy Bill Print', 'Enable', 'Disable', taxType),
-          _buildColumn(
-              'Multiple Salesman Bill Amount', 'Enable', 'Disable', mrpEnabled),
-          _buildColumn('Rupee Billing Display', 'Bold', 'DH', mrpEnabled),
-          _buildColumn('Quick Access Qty', 'Enable', 'Disable', discountType),
-          _buildColumn('Bulk Break', 'Enable', 'Disable', taxType),
-          _buildColumn('Shift End', 'Enable', 'Disable', mrpEnabled),
-          _buildColumn('Print User Name', 'Bold', 'DH', mrpEnabled),
-          _buildColumn('Delete Option (Items, Customers and Suppliers)',
-              'Enable', 'Disable', discountType),
-          _buildColumn('Print Customer Address', 'Enable', 'Disable', taxType),
-          _buildColumn('Print Reward Points', 'Enable', 'Disable', mrpEnabled),
-
-        ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primaryButtonColor,
+              padding: EdgeInsets.symmetric(vertical: 6),
+            ),
+            child: Text(
+              'Apply',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ),
       ),
     );
   }

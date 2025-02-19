@@ -13,7 +13,7 @@ class BoolNotifier extends StateNotifier<BoolState> {
   }
 
   void pageIndex(int index) {
-    state = state.copyWith(pageIndex: index);
+    state = state.copyWith(settingsPageIndex: index);
   }
 
   void setLoading(bool value) {

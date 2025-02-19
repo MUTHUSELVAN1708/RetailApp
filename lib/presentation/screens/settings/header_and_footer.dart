@@ -11,92 +11,82 @@ class HeaderAndFooter extends ConsumerStatefulWidget {
 
 class _HeaderAndFooterState extends ConsumerState<HeaderAndFooter> {
   final _titleController = TextEditingController();
-  final _headerControllers = List.generate(5, (_) => TextEditingController());
-  final _footerControllers = List.generate(5, (_) => TextEditingController());
   final _jurisdictionsController = TextEditingController();
 
-  String selectedOption = 'Normal';
-  List<String> options = ['Normal', 'Dw', 'DH And DW'];
+  final List<TextEditingController> _headerControllers =
+      List.generate(5, (_) => TextEditingController());
+  final List<TextEditingController> _footerControllers =
+      List.generate(5, (_) => TextEditingController());
 
   String? _titleDropdown;
   final List<String?> _headerDropdowns = List.generate(5, (_) => null);
   final List<String?> _footerDropdowns = List.generate(5, (_) => null);
   String? _jurisdictionsDropdown;
 
+  String selectedOption = 'Normal';
+  List<String> options = ['Normal', 'Dw', 'DH And DW'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 5),
-        child: Column(
-          children: [
-            _buildFieldWithDropdown(
-              controller: _titleController,
-              label: 'Title',
-              value: _titleDropdown,
-              onChanged: (value) => setState(() => _titleDropdown = value),
-            ),
-            SizedBox(height: 16),
-            ...List.generate(5, (index) {
-              return Column(
-                children: [
-                  _buildFieldWithDropdown(
-                    controller: _headerControllers[index],
-                    label: 'Header Text Line ${index + 1}',
-                    value: _headerDropdowns[index],
-                    onChanged: (value) =>
-                        setState(() => _headerDropdowns[index] = value),
-                  ),
-                  SizedBox(height: 16),
-                ],
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+        child: ListView.builder(
+          padding: EdgeInsets.only(bottom: 16),
+          itemCount: 12,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return _buildFieldWithDropdown(
+                controller: _titleController,
+                label: 'Title',
+                value: _titleDropdown,
+                onChanged: (value) => setState(() => _titleDropdown = value),
               );
-            }),
-
-            // Footer text fields with dropdowns
-            ...List.generate(5, (index) {
-              return Column(
-                children: [
-                  _buildFieldWithDropdown(
-                    controller: _footerControllers[index],
-                    label: 'Footer Text Line ${index + 1}',
-                    value: _footerDropdowns[index],
-                    onChanged: (value) =>
-                        setState(() => _footerDropdowns[index] = value),
-                  ),
-                  SizedBox(height: 16),
-                ],
+            } else if (index <= 5) {
+              int headerIndex = index - 1;
+              return _buildFieldWithDropdown(
+                controller: _headerControllers[headerIndex],
+                label: 'Header Text Line ${headerIndex + 1}',
+                value: _headerDropdowns[headerIndex],
+                onChanged: (value) =>
+                    setState(() => _headerDropdowns[headerIndex] = value),
               );
-            }),
-
-            // Jurisdictions field with dropdown
-            _buildFieldWithDropdown(
-              controller: _jurisdictionsController,
-              label: 'Jurisdictions Text',
-              value: _jurisdictionsDropdown,
-              onChanged: (value) =>
-                  setState(() => _jurisdictionsDropdown = value),
+            } else if (index <= 10) {
+              int footerIndex = index - 6;
+              return _buildFieldWithDropdown(
+                controller: _footerControllers[footerIndex],
+                label: 'Footer Text Line ${footerIndex + 1}',
+                value: _footerDropdowns[footerIndex],
+                onChanged: (value) =>
+                    setState(() => _footerDropdowns[footerIndex] = value),
+              );
+            } else {
+              return _buildFieldWithDropdown(
+                controller: _jurisdictionsController,
+                label: 'Jurisdictions Text',
+                value: _jurisdictionsDropdown,
+                onChanged: (value) =>
+                    setState(() => _jurisdictionsDropdown = value),
+              );
+            }
+          },
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primaryButtonColor,
+              padding: EdgeInsets.symmetric(vertical: 6),
             ),
-            SizedBox(height: 24),
-
-            // Apply button
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primaryButtonColor,
-                  padding: EdgeInsets.symmetric(vertical: 6),
-                ),
-                child: Text(
-                  'Apply',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
+            child: Text(
+              'Apply',
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -108,85 +98,82 @@ class _HeaderAndFooterState extends ConsumerState<HeaderAndFooter> {
     required String? value,
     required void Function(String?) onChanged,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 8),
-        TextField(
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-            ),
-            constraints: BoxConstraints(maxHeight: 35),
-            hintText: label,
-            hintStyle: TextStyle(color: Colors.grey),
-            border: OutlineInputBorder(),
-            suffixIcon: PopupMenuButton<String>(
-              icon: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                decoration: BoxDecoration(
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+              constraints: BoxConstraints(maxHeight: 35),
+              hintText: label,
+              hintStyle: TextStyle(color: Colors.grey),
+              border: OutlineInputBorder(),
+              suffixIcon: PopupMenuButton<String>(
+                icon: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  decoration: BoxDecoration(
                     color: AppColors.lightGrey,
-                    borderRadius: BorderRadius.circular(8)),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Font',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    Icon(Icons.keyboard_arrow_down_outlined),
-                  ],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('Font', style: TextStyle(color: Colors.black)),
+                      Icon(Icons.keyboard_arrow_down_outlined),
+                    ],
+                  ),
                 ),
+                onSelected: (String value) {
+                  setState(() {
+                    selectedOption = value;
+                  });
+                },
+                itemBuilder: (BuildContext context) {
+                  return options.map((String option) {
+                    return PopupMenuItem<String>(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 5),
+                      height: 20,
+                      value: option,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(option),
+                          if (selectedOption == option)
+                            Icon(Icons.radio_button_checked,
+                                color: AppColors.primaryButtonColor)
+                          else
+                            Icon(Icons.radio_button_unchecked,
+                                color: Colors.grey),
+                        ],
+                      ),
+                    );
+                  }).toList();
+                },
               ),
-              onSelected: (String value) {
-                setState(() {
-                  selectedOption = value;
-                });
-              },
-              itemBuilder: (BuildContext context) {
-                return options.map((String option) {
-                  return PopupMenuItem<String>(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                    height: 20,
-                    value: option,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(option),
-                        SizedBox(width: 8),
-                        if (selectedOption == option)
-                          Icon(Icons.radio_button_checked,
-                              color: AppColors.primaryButtonColor)
-                        else
-                          Icon(Icons.radio_button_unchecked,
-                              color: Colors.grey),
-                      ],
-                    ),
-                  );
-                }).toList();
-              },
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   @override
   void dispose() {
     _titleController.dispose();
+    _jurisdictionsController.dispose();
     for (var controller in _headerControllers) {
       controller.dispose();
     }
     for (var controller in _footerControllers) {
       controller.dispose();
     }
-    _jurisdictionsController.dispose();
     super.dispose();
   }
 }

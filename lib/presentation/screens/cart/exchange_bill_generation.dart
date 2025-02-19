@@ -12,7 +12,6 @@ class ExchangeBillGeneration extends StatefulWidget {
 
 class _ExchangeBillGenerationState extends State<ExchangeBillGeneration> {
   final TextEditingController _billNumberController = TextEditingController();
-  final TextEditingController _billDateController = TextEditingController();
   DateTime? _selectedDate;
 
   Future<void> _pickDate(BuildContext context) async {
@@ -66,20 +65,6 @@ class _ExchangeBillGenerationState extends State<ExchangeBillGeneration> {
       'raw_item': '3.00'
     },
   ];
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2025),
-    );
-    if (picked != null) {
-      setState(() {
-        _billDateController.text = DateFormat('dd-MM-yyyy').format(picked);
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,15 +121,16 @@ class _ExchangeBillGenerationState extends State<ExchangeBillGeneration> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: AppColors.lightGreyColor)),
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             _selectedDate == null
                                 ? 'Bill Date'
-                                : DateFormat('dd-MM-yyyy').format(_selectedDate!),
+                                : DateFormat('dd-MM-yyyy')
+                                    .format(_selectedDate!),
                             style: TextStyle(
                                 color: _selectedDate == null
                                     ? AppColors.lightGreyColor
@@ -178,6 +164,7 @@ class _ExchangeBillGenerationState extends State<ExchangeBillGeneration> {
           Expanded(
             child: ListView.builder(
               itemCount: items.length,
+              physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 return Stack(
                   children: [
