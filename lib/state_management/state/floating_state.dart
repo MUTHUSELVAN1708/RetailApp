@@ -6,21 +6,24 @@ class BoolState {
   final bool isExpanded;
   final bool isLoading;
   final int bottomIndex;
-  final int pageIndex;
+  final int settingsPageIndex;
 
   BoolState(
       {this.isExpanded = false,
       this.isLoading = false,
       this.bottomIndex = 0,
-      this.pageIndex = 0});
+      this.settingsPageIndex = 0});
 
   BoolState copyWith(
-      {bool? isExpanded, bool? isLoading, int? bottomIndex, int? pageIndex}) {
+      {bool? isExpanded,
+      bool? isLoading,
+      int? bottomIndex,
+      int? settingsPageIndex}) {
     return BoolState(
         isExpanded: isExpanded ?? this.isExpanded,
         isLoading: isLoading ?? this.isLoading,
         bottomIndex: bottomIndex ?? this.bottomIndex,
-        pageIndex: pageIndex ?? this.pageIndex);
+        settingsPageIndex: settingsPageIndex ?? this.settingsPageIndex);
   }
 }
 

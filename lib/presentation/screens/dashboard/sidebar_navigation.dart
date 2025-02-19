@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retail_mobile/config/app_colors.dart';
+import 'package:retail_mobile/core/utils/nav_helper.dart';
+import 'package:retail_mobile/presentation/screens/settings/settings_main_screen.dart';
+import 'package:retail_mobile/state_management/state/floating_state.dart';
 
-class SidebarNavigation extends StatelessWidget {
+class SidebarNavigation extends ConsumerStatefulWidget {
   const SidebarNavigation({super.key});
 
+  @override
+  ConsumerState<SidebarNavigation> createState() => _SidebarNavigationState();
+}
+
+class _SidebarNavigationState extends ConsumerState<SidebarNavigation> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -60,9 +69,15 @@ class SidebarNavigation extends StatelessWidget {
               ),
             ),
             _buildSection('Sales', [
-              _buildMenuItem('Dashboard', Icons.dashboard, () {}),
-              _buildMenuItem('Billing', Icons.receipt, () {}),
-              _buildMenuItem('Shifts', Icons.inventory, () {}),
+              _buildMenuItem('Dashboard', Icons.dashboard, () {
+                ref.read(boolProvider.notifier).changeIndex(0);
+              }),
+              _buildMenuItem('Billing', Icons.receipt, () {
+                ref.read(boolProvider.notifier).changeIndex(2);
+              }),
+              _buildMenuItem('Shifts', Icons.inventory, () {
+                ref.read(boolProvider.notifier).changeIndex(3);
+              }),
             ]),
             _buildSection('Masters', [
               _buildMenuItem('Item Master', Icons.list_alt, () {}),
@@ -94,7 +109,10 @@ class SidebarNavigation extends StatelessWidget {
               _buildMenuItem('Customer Support', Icons.support_agent, () {}),
             ]),
             _buildSection('Settings', [
-              _buildMenuItem('Settings', Icons.settings, () {}),
+              _buildMenuItem('Settings', Icons.settings, () {
+                NavigationHelper.slideNavigateTo(
+                    context: context, screen: SettingsMainScreen());
+              }),
               _buildMenuItem('Log Out', Icons.logout, () {}),
             ]),
           ],
@@ -125,16 +143,18 @@ class SidebarNavigation extends StatelessWidget {
 
   Widget _buildMenuItem(String title, IconData icon, void Function() onTap) {
     return ListTile(
-      leading: Icon(icon, color: AppColors.primaryButtonColor, size: 20),
-      title: Text(
-        title,
-        style: const TextStyle(
-          color: AppColors.blackColor,
-          fontSize: 15,
+        leading: Icon(icon, color: AppColors.primaryButtonColor, size: 20),
+        title: Text(
+          title,
+          style: const TextStyle(
+            color: AppColors.blackColor,
+            fontSize: 15,
+          ),
         ),
-      ),
-      dense: true,
-      onTap: () => onTap(),
-    );
+        dense: true,
+        onTap: () {
+          Navigator.of(context).pop();
+          onTap();
+        });
   }
 }

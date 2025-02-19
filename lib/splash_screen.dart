@@ -7,7 +7,10 @@ import 'package:retail_mobile/presentation/screens/cart/bill_screen.dart';
 import 'package:retail_mobile/presentation/screens/cart/delete_bill.dart';
 import 'package:retail_mobile/presentation/screens/cart/exchange_bill_generation.dart';
 import 'package:retail_mobile/presentation/screens/cart/view_bill_screen.dart';
+import 'package:retail_mobile/presentation/screens/customer_master/customer_master_main_screen.dart';
+import 'package:retail_mobile/presentation/screens/customer_master/customer_passbook.dart';
 import 'package:retail_mobile/presentation/screens/dashboard/dashboard_screen.dart';
+import 'package:retail_mobile/presentation/screens/item_master/item_master_main_screen.dart';
 import 'package:retail_mobile/presentation/screens/settings/settings_main_screen.dart';
 import 'package:retail_mobile/presentation/screens/shift/shift_end_screen.dart';
 import 'package:retail_mobile/presentation/screens/shift/shift_start_screen.dart';
@@ -46,7 +49,7 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) =>  ShiftEndScreen(),
+        builder: (context) => CustomerPassbook(),
       ),
     );
   }
