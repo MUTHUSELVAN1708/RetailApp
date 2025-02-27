@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:retail_mobile/config/app_colors.dart';
+import 'package:retail_mobile/core/utils/barcode_scanner.dart'
+    show BarcodeScannerScreen;
 import 'package:retail_mobile/presentation/widgets/custom_svg.dart';
 
 class BarcodeScanner extends StatefulWidget {
@@ -15,11 +16,10 @@ class BarcodeScanner extends StatefulWidget {
 class _BarcodeScannerState extends State<BarcodeScanner> {
   final _searchController = TextEditingController();
 
-  void _scanBarcode() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => BarcodeScannerScreen()),
-    );
+  Future<String?> _scanBarcode() async {
+    String? result = await BarcodeScannerScreen.scanBarcode(context);
+    print(result);
+    return result;
   }
 
   @override
@@ -77,7 +77,9 @@ class _BarcodeScannerState extends State<BarcodeScanner> {
           ),
           SizedBox(width: 8),
           GestureDetector(
-            onTap: _scanBarcode,
+            onTap: () async {
+              final barCode = await _scanBarcode();
+            },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 5),
               decoration: BoxDecoration(
@@ -101,36 +103,6 @@ class _BarcodeScannerState extends State<BarcodeScanner> {
           if (!widget.isCart)
             GestureDetector(onTap: () {}, child: CustomSvg(name: 'plus_icon')),
         ],
-      ),
-    );
-  }
-}
-
-class BarcodeScannerScreen extends StatelessWidget {
-  const BarcodeScannerScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          leading: IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: AppColors.primaryButtonColor,
-              )),
-          titleSpacing: -10,
-          title: Text(
-            'Scan Barcode',
-            style: TextStyle(color: AppColors.primaryButtonColor),
-          )),
-      body: MobileScanner(
-        onDetect: (barcode) {
-          final String code = barcode.raw.toString();
-          Navigator.pop(context, code);
-        },
       ),
     );
   }

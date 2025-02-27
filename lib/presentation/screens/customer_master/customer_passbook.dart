@@ -221,7 +221,7 @@ class _CustomerPassbookState extends State<CustomerPassbook> {
             Expanded(
                 child: GestureDetector(
               onTap: () {
-                (context, true);
+                _pickDate(context, true);
               },
               child: Container(
                 padding:

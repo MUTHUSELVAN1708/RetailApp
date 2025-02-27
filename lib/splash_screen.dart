@@ -2,18 +2,26 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:retail_mobile/presentation/screens/add_role/add_role_screen.dart';
 import 'package:retail_mobile/presentation/screens/bottom_nav/bottom_main_screen.dart';
 import 'package:retail_mobile/presentation/screens/cart/bill_screen.dart';
 import 'package:retail_mobile/presentation/screens/cart/delete_bill.dart';
 import 'package:retail_mobile/presentation/screens/cart/exchange_bill_generation.dart';
 import 'package:retail_mobile/presentation/screens/cart/view_bill_screen.dart';
+import 'package:retail_mobile/presentation/screens/customer_master/add_new_customer_screen.dart';
 import 'package:retail_mobile/presentation/screens/customer_master/customer_master_main_screen.dart';
 import 'package:retail_mobile/presentation/screens/customer_master/customer_passbook.dart';
 import 'package:retail_mobile/presentation/screens/dashboard/dashboard_screen.dart';
+import 'package:retail_mobile/presentation/screens/item_master/add_new_item_screen.dart';
 import 'package:retail_mobile/presentation/screens/item_master/item_master_main_screen.dart';
+import 'package:retail_mobile/presentation/screens/price_stock/price_stock_screen.dart';
+import 'package:retail_mobile/presentation/screens/price_stock/stocks_screen.dart';
+import 'package:retail_mobile/presentation/screens/price_stock/update_price_stock.dart';
 import 'package:retail_mobile/presentation/screens/settings/settings_main_screen.dart';
 import 'package:retail_mobile/presentation/screens/shift/shift_end_screen.dart';
 import 'package:retail_mobile/presentation/screens/shift/shift_start_screen.dart';
+import 'package:retail_mobile/presentation/screens/user_management/add_user_screen.dart';
+import 'package:retail_mobile/presentation/screens/user_management/user_list_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -49,7 +57,7 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => CustomerPassbook(),
+        builder: (context) => UpdatePriceStock(),
       ),
     );
   }

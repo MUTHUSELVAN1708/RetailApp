@@ -42,6 +42,11 @@ class AppTheme {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
+      constraints: BoxConstraints(maxHeight: 35),
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 12,
+      ),
+      hintStyle: TextStyle(color: AppColors.lightGrey),
       fillColor: Colors.white,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),

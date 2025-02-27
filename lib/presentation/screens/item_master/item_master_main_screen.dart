@@ -231,7 +231,7 @@ class _ItemMasterScreenState extends State<ItemMasterScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _buildButton("Export CSV"),
-                  _buildButton("+ Add"),
+                  _buildButton("Add", icon: Icons.add_circle_outline_outlined),
                 ],
               ),
               Row(
@@ -258,26 +258,27 @@ class _ItemMasterScreenState extends State<ItemMasterScreen> {
     );
   }
 
-  Widget _buildItemRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2.0),
-      child: Row(
-        children: [
-          Text("$label : ", style: TextStyle(fontWeight: FontWeight.bold)),
-          Text(value),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildButton(String text) {
+  Widget _buildButton(String text, {IconData? icon}) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
           side: BorderSide(color: AppColors.primaryButtonColor),
           minimumSize: Size(displayWidth(context) / 2.3, 40),
           backgroundColor: AppColors.whiteColor),
       onPressed: () {},
-      child: Text(text, style: TextStyle(color: AppColors.primaryButtonColor)),
+      child: Row(
+        children: [
+          if (icon != null) ...[
+            Icon(
+              icon,
+              color: AppColors.primaryButtonColor,
+            ),
+            SizedBox(
+              width: 4,
+            ),
+          ],
+          Text(text, style: TextStyle(color: AppColors.primaryButtonColor)),
+        ],
+      ),
     );
   }
 
