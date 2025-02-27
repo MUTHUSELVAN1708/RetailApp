@@ -5,6 +5,8 @@ class CustomTextFieldWithTitle extends StatelessWidget {
   final String label;
   final String hintText;
   final void Function(String)? onChanged;
+  final TextInputType? inputType;
+  final bool? readOnly;
 
   const CustomTextFieldWithTitle({
     super.key,
@@ -12,6 +14,8 @@ class CustomTextFieldWithTitle extends StatelessWidget {
     required this.label,
     required this.hintText,
     this.onChanged,
+    this.inputType,
+    this.readOnly = false,
   });
 
   @override
@@ -31,7 +35,8 @@ class CustomTextFieldWithTitle extends StatelessWidget {
           const SizedBox(height: 8),
           TextField(
             controller: controller,
-            keyboardType: TextInputType.number,
+            keyboardType: inputType ?? TextInputType.text,
+            readOnly: readOnly!,
             decoration: InputDecoration(
               hintText: hintText,
               border: OutlineInputBorder(
