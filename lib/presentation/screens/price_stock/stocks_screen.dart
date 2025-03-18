@@ -165,7 +165,6 @@ class _StocksScreenState extends State<StocksScreen> {
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         children: [
-          // Label section with fixed width
           SizedBox(
             width: 120,
             child: Text(

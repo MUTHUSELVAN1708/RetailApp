@@ -20,7 +20,7 @@ class CustomButton2 extends StatelessWidget {
         side: BorderSide(color: AppColors.primaryButtonColor),
         minimumSize: Size(MediaQuery.of(context).size.width / 2.3, 40),
         backgroundColor:
-        isColor ? AppColors.primaryButtonColor : AppColors.whiteColor,
+            isColor ? AppColors.primaryButtonColor : AppColors.whiteColor,
       ),
       onPressed: onPressed,
       child: Text(

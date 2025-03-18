@@ -8,6 +8,7 @@ import 'package:retail_mobile/presentation/screens/cart/bill_screen.dart';
 import 'package:retail_mobile/presentation/screens/cart/delete_bill.dart';
 import 'package:retail_mobile/presentation/screens/cart/exchange_bill_generation.dart';
 import 'package:retail_mobile/presentation/screens/cart/view_bill_screen.dart';
+import 'package:retail_mobile/presentation/screens/configuration/configuration_main_screen.dart';
 import 'package:retail_mobile/presentation/screens/customer_master/add_new_customer_screen.dart';
 import 'package:retail_mobile/presentation/screens/customer_master/customer_master_main_screen.dart';
 import 'package:retail_mobile/presentation/screens/customer_master/customer_passbook.dart';
@@ -57,7 +58,7 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => UpdatePriceStock(),
+        builder: (context) => ConfigurationMainScreen(),
       ),
     );
   }

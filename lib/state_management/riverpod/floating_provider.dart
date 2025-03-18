@@ -16,6 +16,10 @@ class BoolNotifier extends StateNotifier<BoolState> {
     state = state.copyWith(settingsPageIndex: index);
   }
 
+  void configurationPageIndex(int index) {
+    state = state.copyWith(configurationPageIndex: index);
+  }
+
   void setLoading(bool value) {
     state = state.copyWith(isLoading: value);
   }
