@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextFieldWithTitle extends StatelessWidget {
   final TextEditingController controller;
@@ -7,6 +8,7 @@ class CustomTextFieldWithTitle extends StatelessWidget {
   final void Function(String)? onChanged;
   final TextInputType? inputType;
   final bool? readOnly;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomTextFieldWithTitle({
     super.key,
@@ -16,6 +18,7 @@ class CustomTextFieldWithTitle extends StatelessWidget {
     this.onChanged,
     this.inputType,
     this.readOnly = false,
+    this.inputFormatters,
   });
 
   @override
@@ -48,6 +51,7 @@ class CustomTextFieldWithTitle extends StatelessWidget {
               ),
               constraints: const BoxConstraints(maxHeight: 35),
             ),
+            inputFormatters: inputFormatters,
             onChanged: (value) {
               if (onChanged != null) {
                 onChanged!(value);

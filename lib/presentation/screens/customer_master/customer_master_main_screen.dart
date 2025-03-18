@@ -296,7 +296,6 @@ class _CustomerMasterMainScreenState extends State<CustomerMasterMainScreen> {
     );
   }
 
-
   Widget _buildButton(String text) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(

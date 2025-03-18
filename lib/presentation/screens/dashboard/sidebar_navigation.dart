@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retail_mobile/config/app_colors.dart';
 import 'package:retail_mobile/core/utils/nav_helper.dart';
+import 'package:retail_mobile/presentation/screens/add_role/add_role_screen.dart';
+import 'package:retail_mobile/presentation/screens/configuration/configuration_main_screen.dart';
+import 'package:retail_mobile/presentation/screens/price_stock/price_stock_screen.dart';
 import 'package:retail_mobile/presentation/screens/settings/settings_main_screen.dart';
 import 'package:retail_mobile/state_management/state/floating_state.dart';
 
@@ -83,9 +86,18 @@ class _SidebarNavigationState extends ConsumerState<SidebarNavigation> {
               _buildMenuItem('Item Master', Icons.list_alt, () {}),
               _buildMenuItem('Customer Master', Icons.people, () {}),
               _buildMenuItem('User Management', Icons.manage_accounts, () {}),
-              _buildMenuItem('Add Role', Icons.admin_panel_settings, () {}),
-              _buildMenuItem('Price / Stock', Icons.price_change, () {}),
-              _buildMenuItem('Configuration', Icons.settings_outlined, () {}),
+              _buildMenuItem('Add Role', Icons.admin_panel_settings, () {
+                NavigationHelper.slideNavigateTo(
+                    context: context, screen: RoleManagementScreen());
+              }),
+              _buildMenuItem('Price / Stock', Icons.price_change, () {
+                NavigationHelper.slideNavigateTo(
+                    context: context, screen: PriceStockScreen());
+              }),
+              _buildMenuItem('Configuration', Icons.settings_outlined, () {
+                NavigationHelper.slideNavigateTo(
+                    context: context, screen: ConfigurationMainScreen());
+              }),
               _buildMenuItem('Payment / Receipt', Icons.payment, () {}),
               _buildMenuItem('Day End', Icons.access_time, () {}),
               _buildMenuItem('Download', Icons.download, () {}),
