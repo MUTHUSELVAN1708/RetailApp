@@ -5,7 +5,7 @@ class AppColors {
   static const Color primaryButtonColor = Color(0xFF9E122C);
   static const Color secondaryColor = Color(0xFF333333);
   static const Color lightBlackColor = Color(0xFF4D4D4D);
-  static const Color darkGreyColor = Color(0xFF4D4D4D);
+  static const Color veryLightBlackColor = Color(0xFF646464);
   static const Color littleDarkBlackColor = Color(0xFF1E1E1E);
   static const Color lightGreyColor = Color(0xFF838383);
   static const Color veryLightGrey = Color(0xFFC3C3C3);

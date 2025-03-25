@@ -13,14 +13,21 @@ import 'package:retail_mobile/presentation/screens/customer_master/add_new_custo
 import 'package:retail_mobile/presentation/screens/customer_master/customer_master_main_screen.dart';
 import 'package:retail_mobile/presentation/screens/customer_master/customer_passbook.dart';
 import 'package:retail_mobile/presentation/screens/dashboard/dashboard_screen.dart';
+import 'package:retail_mobile/presentation/screens/day_end/day_end_screen.dart';
+import 'package:retail_mobile/presentation/screens/download/download_main_screen.dart';
 import 'package:retail_mobile/presentation/screens/item_master/add_new_item_screen.dart';
 import 'package:retail_mobile/presentation/screens/item_master/item_master_main_screen.dart';
+import 'package:retail_mobile/presentation/screens/payment_receipt/payment_receipt_screen.dart';
 import 'package:retail_mobile/presentation/screens/price_stock/price_stock_screen.dart';
 import 'package:retail_mobile/presentation/screens/price_stock/stocks_screen.dart';
 import 'package:retail_mobile/presentation/screens/price_stock/update_price_stock.dart';
+import 'package:retail_mobile/presentation/screens/purchase_order/purchase_order_screen.dart';
 import 'package:retail_mobile/presentation/screens/settings/settings_main_screen.dart';
 import 'package:retail_mobile/presentation/screens/shift/shift_end_screen.dart';
 import 'package:retail_mobile/presentation/screens/shift/shift_start_screen.dart';
+import 'package:retail_mobile/presentation/screens/supplier_details/supplier_details_screen.dart';
+import 'package:retail_mobile/presentation/screens/supplier_item_linkage/link_items_screen.dart';
+import 'package:retail_mobile/presentation/screens/supplier_item_linkage/supplier_item_linkage_screen.dart';
 import 'package:retail_mobile/presentation/screens/user_management/add_user_screen.dart';
 import 'package:retail_mobile/presentation/screens/user_management/user_list_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,7 +65,7 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => ConfigurationMainScreen(),
+        builder: (context) => PurchaseOrderScreen(),
       ),
     );
   }
