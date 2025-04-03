@@ -103,4 +103,62 @@ class CommonTexts {
     'Configuration',
     'Payment / Receipt',
   ];
+
+  static List<String> salesReport = [
+    'Bill Wise Report',
+    'Cumulative Purchase-Payment-Receipt-Sales Report',
+    'Day Wise Report',
+    'Duplicate Bill Report',
+    'Month Wise Report',
+    'Payment Report',
+    'Receipt Report',
+    'Tax Report ',
+    'Transaction Report',
+    'Rate Wise Report',
+    'Rate Slab Summary Wise Report',
+    'Void Bill Report ',
+    'Sales Order Bill Wise Report',
+    'Profit Report',
+    'Sales Return Report',
+  ];
+
+  static List<String> categoryWiseReport = [
+    'Category Wise Report',
+    'Department Wise Report',
+    'Brand Wise Report',
+    'Brand-Department Wise Report',
+    'Department-Item Wise Report',
+    'Fast Selling Item Wise Report',
+    'Item Wise Report',
+    'Stock Report',
+    'Stock Balance Report',
+    'Minimum Stock Report',
+    'Item And Brand Wise Sales/Return Report',
+    'HSN Wise Report',
+  ];
+
+  static List<String> customerDetailReport = [
+    'Customer Detailed Report',
+    'Customer Wise Report',
+    'Supplier Detailed Report',
+    'Supplier Wise Report',
+    'User Detailed Report',
+    'User Wise Report',
+    'Salesman Detailed Report',
+    'Salesman Wise Report',
+    'Salesman Amount Report',
+    'Shift Wise Report',
+    'Shift Transaction Report',
+    'Denomination Wise Report',
+  ];
+
+  static List<String> cloudActivityReport = [
+    'Select Field',
+    'Items',
+    'Customers',
+    'Invoices',
+    'Stock',
+    'Supplier Details',
+    'PO GIN Details',
+  ];
 }

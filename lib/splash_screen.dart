@@ -22,8 +22,42 @@ import 'package:retail_mobile/presentation/screens/price_stock/price_stock_scree
 import 'package:retail_mobile/presentation/screens/price_stock/stocks_screen.dart';
 import 'package:retail_mobile/presentation/screens/price_stock/update_price_stock.dart';
 import 'package:retail_mobile/presentation/screens/purchase_order/purchase_order_screen.dart';
+import 'package:retail_mobile/presentation/screens/report/cloud_report/cloud_activity_report.dart';
+import 'package:retail_mobile/presentation/screens/report/cloud_report/cloud_report_item.dart';
+import 'package:retail_mobile/presentation/screens/report/home_report.dart';
+import 'package:retail_mobile/presentation/screens/report/inventory_report/inventory_report.dart';
+import 'package:retail_mobile/presentation/screens/report/inventory_report/inventory_report_balance.dart';
+import 'package:retail_mobile/presentation/screens/report/inventory_report/inventory_report_brand.dart';
+import 'package:retail_mobile/presentation/screens/report/inventory_report/inventory_report_brand_dept.dart';
+import 'package:retail_mobile/presentation/screens/report/inventory_report/inventory_report_category.dart';
+import 'package:retail_mobile/presentation/screens/report/inventory_report/inventory_report_depitem.dart';
+import 'package:retail_mobile/presentation/screens/report/inventory_report/inventory_report_fast_selling.dart';
+import 'package:retail_mobile/presentation/screens/report/inventory_report/inventory_report_hsn.dart';
+import 'package:retail_mobile/presentation/screens/report/inventory_report/inventory_report_itemwise.dart';
+import 'package:retail_mobile/presentation/screens/report/inventory_report/inventory_report_minimum.dart';
+import 'package:retail_mobile/presentation/screens/report/inventory_report/inventory_report_stock.dart';
+import 'package:retail_mobile/presentation/screens/report/inventory_report/inventoy_report_item_brand.dart';
+import 'package:retail_mobile/presentation/screens/report/other_report/other_report.dart';
+import 'package:retail_mobile/presentation/screens/report/other_report/other_report_supplier_wish.dart';
+import 'package:retail_mobile/presentation/screens/report/other_report/other_report_transaction.dart';
+import 'package:retail_mobile/presentation/screens/report/other_report/other_report_user_detail.dart';
+import 'package:retail_mobile/presentation/screens/report/other_report/other_report_user_wish.dart';
+import 'package:retail_mobile/presentation/screens/report/sales_report/sales_report.dart';
+import 'package:retail_mobile/presentation/screens/report/sales_report/sales_report_billwise.dart';
+import 'package:retail_mobile/presentation/screens/report/sales_report/sales_report_bitwise.dart';
+import 'package:retail_mobile/presentation/screens/report/sales_report/sales_report_cumulative.dart';
+import 'package:retail_mobile/presentation/screens/report/sales_report/sales_report_daywise.dart';
+
+import 'package:retail_mobile/presentation/screens/report/sales_report/sales_report_rateslap.dart';
+
+import 'package:retail_mobile/presentation/screens/report/sales_report/sales_report_transaction.dart';
+import 'package:retail_mobile/presentation/screens/sales_order/generate_po_screen.dart';
+import 'package:retail_mobile/presentation/screens/sales_order/sales_order2.dart';
+import 'package:retail_mobile/presentation/screens/settings/settings_gst_screen.dart';
 import 'package:retail_mobile/presentation/screens/settings/settings_main_screen.dart';
 import 'package:retail_mobile/presentation/screens/shift/shift_end_screen.dart';
+import 'package:retail_mobile/presentation/screens/shift/shift_list_screen.dart';
+import 'package:retail_mobile/presentation/screens/shift/shift_main_screen.dart';
 import 'package:retail_mobile/presentation/screens/shift/shift_start_screen.dart';
 import 'package:retail_mobile/presentation/screens/supplier_details/supplier_details_screen.dart';
 import 'package:retail_mobile/presentation/screens/supplier_item_linkage/link_items_screen.dart';
@@ -31,6 +65,9 @@ import 'package:retail_mobile/presentation/screens/supplier_item_linkage/supplie
 import 'package:retail_mobile/presentation/screens/user_management/add_user_screen.dart';
 import 'package:retail_mobile/presentation/screens/user_management/user_list_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:retail_mobile/presentation/screens/supplier_details/add_supplier_details_screen.dart';
+import 'package:retail_mobile/presentation/screens/sales_order/sales_order_screen.dart';
+import 'package:retail_mobile/presentation/screens/sales_order/demo_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -65,7 +102,7 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => PurchaseOrderScreen(),
+        builder: (context) => HomeReportScreen(),
       ),
     );
   }
